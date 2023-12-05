@@ -15,7 +15,7 @@ const findNumber = (line, fromEnd) => {
   return 0;
 };
 
-const part1 = (file) => {
+const run = (file) => {
   const lines = fs.readFileSync(file, 'utf8');
   const array = lines.split('\n');
 
@@ -29,9 +29,9 @@ const part1 = (file) => {
     return acc + number;
   }, 0);
 
-  console.log(`PART 1 RESULT ${file}`, sum);
+  console.log(`RESULT (${file}):`, sum);
 };
 
 console.log();
-part1('sample1.txt');
-part1('input.txt');
+run('sample1.txt');
+run('input.txt');

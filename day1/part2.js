@@ -23,7 +23,7 @@ const findAllNumbers = (line) => {
   }) ?? [];
 };
 
-const part2 = (file) => {
+const run = (file) => {
   const lines = fs.readFileSync(file, 'utf8');
   const array = lines.split('\n');
 
@@ -38,10 +38,10 @@ const part2 = (file) => {
     return acc + number;
   }, 0);
 
-  console.log(`PART 2 RESULT ${file}`, sum);
+  console.log(`RESULT (${file}):`, sum);
 };
 
 console.log();
-part2('sample2.txt');
-part2('input.txt');
+run('sample2.txt');
+run('input.txt');
 
