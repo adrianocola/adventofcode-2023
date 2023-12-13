@@ -1,4 +1,4 @@
-import {readFileSync } from 'fs';
+import exec from '../exec.js';
 
 enum HandScore {
   FIVE_OF_A_KIND = 7,
@@ -84,8 +84,7 @@ class Hand {
   }
 }
 
-const run = (file: string) => {
-  const lines = readFileSync(file, 'utf8');
+const run = (lines: string) => {
   const array = lines.split('\n');
   const hands: Hand[] = [];
   array.map((line) => {
@@ -95,13 +94,10 @@ const run = (file: string) => {
     hands.push(new Hand(handText, parseInt(bid, 10)));
   });
   const sortedHands = hands.sort((a, b) => a.compare(b));
-  const winnings = sortedHands.reduce((acc, hand, rank) => {
+  return sortedHands.reduce((acc, hand, rank) => {
     return acc + (hand.bid * (rank + 1));
   }, 0);
-
-  console.log(`RESULT (${file}):`, winnings);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 6440, run);
+exec('input.txt', 253205868, run);

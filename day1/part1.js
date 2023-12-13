@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const NUMBER_REGEX = /\d/;
 
@@ -15,8 +15,7 @@ const findNumber = (line, fromEnd) => {
   return 0;
 };
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
 
   const result = array.map((line) => {
@@ -25,13 +24,10 @@ const run = (file) => {
     return parseInt(`${firstNumber}${lastNumber}`, 10);
   });
 
-  const sum = result.reduce((acc, number) => {
+  return result.reduce((acc, number) => {
     return acc + number;
   }, 0);
-
-  console.log(`RESULT (${file}):`, sum);
 };
 
-console.log();
-run('sample1.txt');
-run('input.txt');
+exec('sample1.txt', 142, run);
+exec('input.txt', 56506, run);

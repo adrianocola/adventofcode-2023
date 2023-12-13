@@ -5,16 +5,19 @@
   "exports": "./index.js",
   "type": "module",
   "scripts": {
+    "ts": "node --no-warnings=ExperimentalWarning --loader ts-node/esm",
     "test": "echo \\\"Error: no test specified\\\" && exit day1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "colors": "1.4.0",
-    "ora": "7.0.1",
-    "ts-node": "10.9.1",
-    "typescript": "5.3.2"
+    "@sindresorhus/tsconfig": "^5.0.0",
+    "@tsconfig/node-lts-strictest-esm": "18.12.1",
+    "colors": "^1.4.0",
+    "ora": "^7.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"

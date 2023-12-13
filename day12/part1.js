@@ -1,4 +1,4 @@
-import run from '../run.js';
+import exec from '../exec.js';
 
 const calcPossibleArrangements = (line, records) => {
   if (!line) {
@@ -27,7 +27,7 @@ const calcPossibleArrangements = (line, records) => {
   return result;
 };
 
-const fn = (lines) => {
+const run = (lines) => {
   const array = lines.split('\n').filter(Boolean);
 
   return array.reduce((acc, line) => {
@@ -39,7 +39,7 @@ const fn = (lines) => {
   }, 0);
 };
 
-run('sample.txt', 21, fn);
-run('input.txt', 7404, fn);
+exec('sample.txt', 21, run);
+exec('input.txt', 7404, run);
 
 // Given up, I've used the solution from https://www.youtube.com/watch?v=g3Ms5e7Jdqo

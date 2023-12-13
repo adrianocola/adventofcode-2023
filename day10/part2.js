@@ -1,5 +1,5 @@
-const fs = require('fs');
-const colors = require('colors');
+import exec from '../exec.js';
+import colors from 'colors';
 
 const ORTOGONAL_DIRECTIONS = [1, -1, 2, -2];
 
@@ -261,8 +261,7 @@ const print = (array) => {
   }).join('')));
 }
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines
     .split('\n')
     .filter(Boolean)
@@ -280,17 +279,16 @@ const run = (file) => {
 
   // print(array);
 
-  console.log(`RESULT (${file}):`, result);
+  return result;
 };
 
-console.log();
 // run('sample1.txt');
 // run('sample2.txt');
 // run('sample3.txt');
-run('sample4.txt');
-run('sample5.txt');
-run('sample6.txt');
-run('input.txt');
+exec('sample4.txt', 4, run);
+exec('sample5.txt', 8, run);
+exec('sample6.txt', 10, run);
+exec('input.txt', 423, run);
 
 // FINAL ALGORITHM:
 //   1. map the main loop

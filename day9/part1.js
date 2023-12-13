@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const calculateDifferences = (numbers) => {
   if (numbers.every((n) => n === 0)) return 0;
@@ -12,19 +12,15 @@ const calculateDifferences = (numbers) => {
   return last + calculateDifferences(differences);
 };
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
 
-  const total = array.reduce((acc, line) => {
+  return array.reduce((acc, line) => {
     if (!line) return acc;
     const numbers = line.split(' ').map((n) => parseInt(n));
     return acc + calculateDifferences(numbers);
   }, 0);
-
-  console.log(`RESULT (${file}):`, total);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 114, run);
+exec('input.txt', 2105961943, run);

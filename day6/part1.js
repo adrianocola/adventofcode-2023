@@ -1,7 +1,6 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
   const times = array[0].split(/\s+/).slice(1);
   const distances = array[1].split(/\s+/).slice(1);
@@ -21,11 +20,8 @@ const run = (file) => {
     }
   }
 
-  const total = waysToBeat.reduce((acc, item) => acc * item, 1);
-
-  console.log(`RESULT (${file}):`, total);
+  return waysToBeat.reduce((acc, item) => acc * item, 1);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 288, run);
+exec('input.txt', 4811940, run);

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const ALL_DIRECTIONS = [1, -1, 2, -2];
 
@@ -85,20 +85,14 @@ const findFarthestDistanceFrom = (lines, startingPos, startingPipe) => {
   return step;
 }
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n').map((line) => Array.from(line));
 
   const startingPos = findStartingPos(array);
   getStartingPipeType(array, startingPos);
-  const distance = findFarthestDistanceFrom(array, startingPos);
-
-  // array.forEach((line) => console.log(line.join('')));
-
-  console.log(`RESULT (${file}):`, distance);
+  return findFarthestDistanceFrom(array, startingPos);
 };
 
-console.log();
-run('sample1.txt');
-run('sample2.txt');
-run('input.txt');
+exec('sample1.txt', 4, run);
+exec('sample2.txt', 8, run);
+exec('input.txt', 6697, run);

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const GAME_REGEX = /Game (\d+)/;
 const CUBE_REGEX = /(\d+) (green|red|blue)/;
@@ -9,8 +9,7 @@ const MAX = {
   blue: 14,
 };
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
 
   const result = array.map((line) => {
@@ -30,13 +29,11 @@ const run = (file) => {
     return possible ? parseInt(gameId, 10) : 0;
   });
 
-  const sum = result.reduce((acc, number) => {
+  return result.reduce((acc, number) => {
     return acc + number;
   }, 0);
 
-  console.log(`RESULT (${file}):`, sum);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 8, run);
+exec('input.txt', 1931, run);

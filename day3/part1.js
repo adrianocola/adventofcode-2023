@@ -1,7 +1,6 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
-const createEngineMap = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const createEngineMap = (lines) => {
   const array = lines.split('\n');
 
   return array.map((line) => {
@@ -22,8 +21,8 @@ const isAdjacentToSymbol = (map, posX, posY) => {
   }
 };
 
-const run = (file) => {
-  const engineMap = createEngineMap(file);
+const run = (lines) => {
+  const engineMap = createEngineMap(lines);
 
   let sum = 0;
   for (let y = 0; y < engineMap.length; y++) {
@@ -55,9 +54,8 @@ const run = (file) => {
     }
   }
 
-  console.log(`RESULT (${file}):`, sum);
+  return sum;
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 4361, run);
+exec('input.txt', 521515, run);

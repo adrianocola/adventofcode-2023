@@ -1,7 +1,6 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
-const createEngineMap = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const createEngineMap = (lines) => {
   const array = lines.split('\n');
   const numbersMap = {};
   let nextNumberId = 1;
@@ -53,8 +52,8 @@ const getNumbersAdjacent = (map, numMap, posX, posY) => {
   return numbers;
 };
 
-const run = (file) => {
-  const {engineMap, numbersMap} = createEngineMap(file);
+const run = (lines) => {
+  const {engineMap, numbersMap} = createEngineMap(lines);
 
   let sum = 0;
   for (let y = 0; y < engineMap.length; y++) {
@@ -70,9 +69,8 @@ const run = (file) => {
     }
   }
 
-  console.log(`RESULT (${file}):`, sum);
+  return sum;
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 467835, run);
+exec('input.txt',69527306, run);

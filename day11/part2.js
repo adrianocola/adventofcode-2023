@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const transpose = (array, reverse) => {
   const height = array.length;
@@ -73,8 +73,7 @@ const calcAllGalaxiesDistances = (galaxies, expandedRows, expandedColumns, rate)
   return distancies;
 };
 
-const run = (file, rate) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines, rate) => {
   const array = lines.split('\n').filter(Boolean).map((line) => {
     return Array.from(line);
   });
@@ -82,14 +81,11 @@ const run = (file, rate) => {
   const expandedRows = calcExpandedRows(array);
   const expandedColumns = calcExpandedRows(transpose(array));
   const galaxies = mapGalaxies(array);
-  const total = calcAllGalaxiesDistances(galaxies, expandedRows, expandedColumns, rate)
-
-  console.log(`RESULT (${file}):`, total);
+  return calcAllGalaxiesDistances(galaxies, expandedRows, expandedColumns, rate)
 };
 
-console.log();
-run('sample.txt', 2);
-run('sample.txt', 10);
-run('sample.txt', 100);
-run('input.txt', 1000000);
+exec('sample.txt', 374, run, 2);
+exec('sample.txt', 1030, run, 10);
+exec('sample.txt', 8410, run, 100);
+exec('input.txt', 406725732046, run, 1000000);
 

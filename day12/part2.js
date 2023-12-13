@@ -1,4 +1,4 @@
-import run from '../run.js';
+import exec from '../exec.js';
 
 const cache = {};
 
@@ -30,7 +30,7 @@ const calcPossibleArrangements = (line, records) => {
   return result;
 };
 
-const fn = (lines) => {
+const run = (lines) => {
   const array = lines.split('\n').filter(Boolean);
 
   return array.reduce((acc, line, i) => {
@@ -42,7 +42,7 @@ const fn = (lines) => {
   }, 0);
 };
 
-run('sample.txt', 525152, fn);
-run('input.txt', 3384337640277, fn);
+exec('sample.txt', 525152, run);
+exec('input.txt', 3384337640277, run);
 
 // sulution 1 + cache

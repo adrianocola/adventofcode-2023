@@ -1,10 +1,9 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const GAME_REGEX = /Game (\d+)/;
 const CUBE_REGEX = /(\d+) (green|red|blue)/;
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
 
   const result = array.map((line) => {
@@ -33,13 +32,10 @@ const run = (file) => {
     return power;
   });
 
-  const sum = result.reduce((acc, number) => {
+  return result.reduce((acc, number) => {
     return acc + number;
   }, 0);
-
-  console.log(`RESULT (${file}):`, sum);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 2286, run);
+exec('input.txt', 83105, run);

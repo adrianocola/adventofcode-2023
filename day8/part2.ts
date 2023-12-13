@@ -1,4 +1,4 @@
-import {readFileSync} from 'fs';
+import exec from '../exec.js';
 
 const DIRECTION_REGEX = /(.+) = \((.+), (.+)\)/;
 
@@ -62,16 +62,12 @@ class Map {
   }
 }
 
-const run = (file: string) => {
-  const lines = readFileSync(file, 'utf8');
+const run = (lines: string) => {
   const array = lines.split('\n');
 
   const map = new Map(array);
-  const steps = map.calculateSteps();
-
-  console.log(`RESULT (${file}):`, steps);
+  return map.calculateSteps();
 };
 
-console.log();
-run('sample3.txt');
-run('input.txt');
+exec('sample3.txt', 6, run);
+exec('input.txt', 21003205388413, run);

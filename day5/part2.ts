@@ -1,4 +1,4 @@
-import {readFileSync} from 'fs';
+import exec from '../exec.js';
 
 interface SeedRange {
   start: number;
@@ -109,16 +109,12 @@ class Farm {
   };
 }
 
-const run = (file: string) => {
-  const lines = readFileSync(file, 'utf8');
+const run = (lines: string) => {
   const array = lines.split('\n');
 
   const farm = new Farm(array);
-  const lowestLocation = farm.getLowestLocation();
-
-  console.log(`RESULT (${file}):`, lowestLocation);
+  return farm.getLowestLocation();
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 46, run);
+exec('input.txt', 20283860, run);

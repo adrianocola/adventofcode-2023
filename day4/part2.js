@@ -1,4 +1,4 @@
-const fs = require('fs');
+import exec from '../exec.js';
 
 const calculateNumber = (winningNumbers, myNumbers) => {
   const intersection = winningNumbers.filter(value => myNumbers.includes(value));
@@ -7,12 +7,11 @@ const calculateNumber = (winningNumbers, myNumbers) => {
   return Math.pow(2, intersection.length - 1);
 };
 
-const run = (file) => {
-  const lines = fs.readFileSync(file, 'utf8');
+const run = (lines) => {
   const array = lines.split('\n');
   const cardsCount = {};
 
-  const sum = array.reduce((acc, line) => {
+  return array.reduce((acc, line) => {
     if (!line) return acc;
 
     const split = line.split(/:|\|/)
@@ -31,14 +30,9 @@ const run = (file) => {
       }
     }
 
-    console.log(cardId, successes.length, cardCount);
-
     return acc + cardCount;
-  }, 0)
-
-  console.log(`RESULT (${file}):`, sum);
+  }, 0);
 };
 
-console.log();
-run('sample.txt');
-run('input.txt');
+exec('sample.txt', 30, run);
+exec('input.txt', 9496801, run);
