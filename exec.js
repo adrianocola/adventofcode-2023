@@ -24,4 +24,13 @@ const exec = (file, expected, fn, ...params) => {
   }
 };
 
+let firstLog = true;
+exec.log = (...msg) => {
+  if (firstLog) {
+    console.log();
+    firstLog = false;
+  }
+  console.log(...msg);
+};
+
 export default exec;

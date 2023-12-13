@@ -1,6 +1,6 @@
 import exec from '../exec.js';
 
-const transpose = (array, reverse) => {
+const transpose = (array) => {
   const height = array.length;
   const width = array[0].length;
   const newArray = new Array(width).fill(0).map(() => new Array(height).fill(0));
