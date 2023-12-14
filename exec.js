@@ -24,6 +24,38 @@ const exec = (file, expected, fn, ...params) => {
   }
 };
 
+export const transpose = (array, joinStrings) => {
+  const height = array.length;
+  const width = array[0].length;
+  const newArray = new Array(width).fill(0).map(() => new Array(height).fill(0));
+  for (let y = 0; y < height; y++) {
+    const row = array[y];
+    for (let x = 0; x < width; x++) {
+      newArray[x][y] = row[x];
+    }
+  }
+
+  return joinStrings ? newArray.map((line) => line.join('')) : newArray;
+};
+
+export const isEqualDeep = (a, b) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      if (!isEqualDeep(a[i], b[i])) return false;
+    }
+    return true;
+  } else if (typeof a === 'object' && typeof b === 'object') {
+    const keys = Object.keys(a);
+    if (keys.length !== Object.keys(b).length) return false;
+    for (const key of keys) {
+      if (!isEqualDeep(a[key], b[key])) return false;
+    }
+    return true;
+  }
+  return a === b;
+};
+
 let firstLog = true;
 exec.log = (...msg) => {
   if (firstLog) {
