@@ -1,11 +1,26 @@
+import {
+  Worker, isMainThread, parentPort, workerData,
+} from 'node:worker_threads';
 import fs from 'node:fs';
 import ora from 'ora';
 import colors from 'colors';
+
+let spinnerInstance;
+
+const originalConsoleLog = console.log;
+console.log = (...args) => {
+  if (spinnerInstance) {
+    spinnerInstance.clear();
+    spinnerInstance.frame();
+  }
+  originalConsoleLog(...args);
+};
 
 const exec = (file, expected, fn, ...params) => {
   const fileWithParams = `${file}${params.length ? ` (${params.join(',')})` : ''}`;
   const lines = fs.readFileSync(file, 'utf8');
   const spinner = ora(fileWithParams).start();
+  spinnerInstance = spinner;
   const start = Date.now();
   const result = fn(lines, ...params);
 
@@ -20,8 +35,10 @@ const exec = (file, expected, fn, ...params) => {
   if (success) {
     spinner.succeed(color(`${fileWithParams}: ${colors.brightWhite(result)} ${colors.grey(durationText)}`));
   } else {
-    spinner.fail(color(`${fileWithParams}: ${colors.green(`+${expected}`)} ${colors.red(`-${result}`)} ${colors.grey(durationText)}`));
+    spinner.fail(color(`${fileWithParams}: ${colors.green(`${expected}`)} ${colors.red(`${result}`)} ${colors.grey(durationText)}`));
   }
+  spinnerInstance = undefined;
+  console.log(process.argv[1]);
 };
 
 export const transpose = (array, joinStrings) => {
@@ -54,15 +71,6 @@ export const isEqualDeep = (a, b) => {
     return true;
   }
   return a === b;
-};
-
-let firstLog = true;
-exec.log = (...msg) => {
-  if (firstLog) {
-    console.log();
-    firstLog = false;
-  }
-  console.log(...msg);
 };
 
 export default exec;
