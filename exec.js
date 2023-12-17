@@ -38,7 +38,6 @@ const exec = (file, expected, fn, ...params) => {
     spinner.fail(color(`${fileWithParams}: ${colors.green(`${expected}`)} ${colors.red(`${result}`)} ${colors.grey(durationText)}`));
   }
   spinnerInstance = undefined;
-  console.log(process.argv[1]);
 };
 
 export const transpose = (array, joinStrings) => {
@@ -71,6 +70,64 @@ export const isEqualDeep = (a, b) => {
     return true;
   }
   return a === b;
+};
+
+export const DIRECTIONS = {
+  TOP: 1,
+  LEFT: 2,
+  BOTTOM: 3,
+  RIGHT: 4,
+};
+
+export const getNextMatrixPos = (pos, dir) => {
+  if (dir === 1) {
+    return {x: pos.x, y: pos.y - 1};
+  }
+  if (dir === 2) {
+    return {x: pos.x - 1, y: pos.y};
+  }
+  if (dir === 3) {
+    return {x: pos.x, y: pos.y + 1};
+  }
+  if (dir === 4) {
+    return {x: pos.x + 1, y: pos.y};
+  }
+};
+
+export const iterMatrixRow = (matrix, row, reverse, fn) => {
+  if (typeof reverse === 'function') {
+    fn = reverse;
+    reverse = false;
+  }
+
+  const width = matrix[0].length;
+
+  const start = reverse ? width - 1 : 0;
+  const end = reverse ? 0 : width - 1;
+  const step = reverse ? - 1 : 1;
+
+  for (let x = start; reverse ? x >= end : x <= end; x += step) {
+    const result = fn(matrix[row]?.[x], x, row);
+    if (result === false) break;
+  }
+};
+
+export const iterMatrixColumn = (matrix, column, reverse, fn) => {
+  if (typeof reverse === 'function') {
+    fn = reverse;
+    reverse = false;
+  }
+
+  const height = matrix.length;
+
+  const start = reverse ? height - 1 : 0;
+  const end = reverse ? 0 : height - 1;
+  const step = reverse ? - 1 : 1;
+
+  for (let y = start; reverse ? y >= end : y <= end; y += step) {
+    const result = fn(matrix[y]?.[column], y, column);
+    if (result === false) break;
+  }
 };
 
 export default exec;
