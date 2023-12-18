@@ -79,6 +79,15 @@ export const DIRECTIONS = {
   RIGHT: 4,
 };
 
+export const DIRECTIONS_LIST = Object.values(DIRECTIONS);
+
+export const DIRECTIONS_OPPOSITE = {
+  [DIRECTIONS.TOP]: DIRECTIONS.BOTTOM,
+  [DIRECTIONS.BOTTOM]: DIRECTIONS.TOP,
+  [DIRECTIONS.LEFT]: DIRECTIONS.RIGHT,
+  [DIRECTIONS.RIGHT]: DIRECTIONS.LEFT,
+};
+
 export const getNextMatrixPos = (pos, dir) => {
   if (dir === 1) {
     return {x: pos.x, y: pos.y - 1};
