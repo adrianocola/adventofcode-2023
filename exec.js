@@ -88,18 +88,18 @@ export const DIRECTIONS_OPPOSITE = {
   [DIRECTIONS.RIGHT]: DIRECTIONS.LEFT,
 };
 
-export const getNextMatrixPos = (pos, dir) => {
+export const getNextMatrixPos = (pos, dir, offset = 1) => {
   if (dir === 1) {
-    return {x: pos.x, y: pos.y - 1};
+    return {x: pos.x, y: pos.y - offset};
   }
   if (dir === 2) {
-    return {x: pos.x - 1, y: pos.y};
+    return {x: pos.x - offset, y: pos.y};
   }
   if (dir === 3) {
-    return {x: pos.x, y: pos.y + 1};
+    return {x: pos.x, y: pos.y + offset};
   }
   if (dir === 4) {
-    return {x: pos.x + 1, y: pos.y};
+    return {x: pos.x + offset, y: pos.y};
   }
 };
 
